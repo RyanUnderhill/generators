@@ -5,7 +5,8 @@
 #include <algorithm>
 #include <assert.h>
 #include <functional>
-#include <span>
+//#include <span>
+#include "span.h"
 #include <memory>
 #include <numeric>
 #include <queue>

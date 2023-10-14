@@ -1,6 +1,8 @@
 #include <cuda_runtime.h>
 #include <assert.h>
-#include <span>
+//#include <span>
+#include "span.h"
+
 
 namespace Generators {
 namespace cuda {

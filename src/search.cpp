@@ -97,9 +97,11 @@ void BeamSearch::SelectTopK() {
   struct ScoreIndex {
     float score;
     int32_t index;
+
+    bool operator<(const ScoreIndex &v) const { return score < v.score; }
   };
 
-  auto compare = [](const ScoreIndex& left, const ScoreIndex& right) { return left.score < right.score; };
+//  auto compare = [](const ScoreIndex& left, const ScoreIndex& right) { return left.score < right.score; };
   auto scores = std::make_unique<ScoreType[]>(top_k * params_.batch_size);
   auto indices = std::make_unique<int32_t[]>(top_k * params_.batch_size);
   auto tokens = std::make_unique<int32_t[]>(top_k * params_.batch_size);
@@ -109,7 +111,7 @@ void BeamSearch::SelectTopK() {
   auto next_tokens = std::span<int32_t>(tokens.get(), top_k * params_.batch_size);
 
   for (int batch_index = 0; batch_index < params_.batch_size; batch_index++) {
-    std::priority_queue<ScoreIndex, std::vector<ScoreIndex>, decltype(compare)> queue;
+    std::priority_queue<ScoreIndex, std::vector<ScoreIndex>> queue;
     auto token_scores_sub = next_token_scores_.subspan(batch_index * params_.num_beams * params_.vocab_size, params_.num_beams * params_.vocab_size);
     for (int i = 0; i < token_scores_sub.size(); i++) {
       queue.push({token_scores_sub[i], i});

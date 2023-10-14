@@ -60,7 +60,7 @@ void Gpt::CreateInputs(std::span<int32_t> sequence_lengths, const SearchParams& 
   position_ids_ = OrtValue::CreateTensor<int32_t>(allocator, input_ids_shape, std::size(input_ids_shape));
 
   int64_t position_shape[] = {search_params_.batch_size * search_params_.num_beams, 1};
-  next_positions_ = Allocate<int32_t>(allocator, position_shape[0], next_positions_buffer_);
+  next_positions_ = Ort::Allocate<int32_t>(allocator, position_shape[0], next_positions_buffer_);
   memset(next_positions_.data(), 0, next_positions_.size_bytes());
   next_positions_tensor_ = OrtValue::CreateTensor<int32_t>(allocator.GetInfo(), next_positions_.data(), next_positions_.size(), position_shape, std::size(position_shape));
 
