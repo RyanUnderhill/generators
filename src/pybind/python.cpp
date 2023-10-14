@@ -252,7 +252,7 @@ struct PyBeamSearch_Cuda : BeamSearch_Cuda {
 };
 
 struct PyGpt_Cuda : Gpt_Cuda {
-  PyGpt_Cuda(const std::string& str) : Gpt_Cuda{GetOrtEnv(), ORTCHAR_String(str.c_str()), nullptr} {
+  PyGpt_Cuda(const std::string& str) : Gpt_Cuda{GetOrtEnv(), str.c_str(), nullptr} {
   }
 
   DeviceArray<float>& GetLogits() {
@@ -347,7 +347,7 @@ PYBIND11_MODULE(ort_generators, m) {
   m.def("print", &TestFP16, "Test float16");
 
   pybind11::class_<Gpt>(m, "Gpt")
-      .def(pybind11::init([](const std::string& str) { return new Gpt(GetOrtEnv(), ORTCHAR_String(str.c_str())); }))
+      .def(pybind11::init([](const std::string& str) { return new Gpt(GetOrtEnv(), str.c_str()); }))
       .def("CreateInputs", [](Gpt& s, pybind11::array_t<int32_t> sequence_lengths, const PySearchParams& params) { s.CreateInputs(ToSpan(sequence_lengths), params); })
       .def("GetVocabSize", &Gpt::GetVocabSize)
       .def("Run", [](Gpt& s, pybind11::array_t<int32_t> next_tokens, pybind11::array_t<int32_t> next_indices, int current_length) { s.Run(ToSpan(next_tokens), ToSpan(next_indices), current_length); })

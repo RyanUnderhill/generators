@@ -98,12 +98,12 @@ target_include_directories(Generators PRIVATE ${CMAKE_SOURCE_DIR}/ort)
 add_executable (Tests ${test_srcs})
 target_include_directories(Tests PRIVATE ${CMAKE_SOURCE_DIR}/ort)
 target_link_directories(Tests PRIVATE ${CMAKE_SOURCE_DIR}/ort)
-target_link_libraries(Tests PRIVATE Generators Models "onnxruntime.lib")
+target_link_libraries(Tests PRIVATE Generators Models "libonnxruntime.so")
 
 pybind11_add_module(ort_generators ${pybind_srcs})
 target_include_directories(ort_generators PRIVATE ${CMAKE_SOURCE_DIR}/ort)
 target_link_directories(ort_generators PRIVATE ${CMAKE_SOURCE_DIR}/ort)
-target_link_libraries(ort_generators PRIVATE Generators Models "onnxruntime.lib")
+target_link_libraries(ort_generators PRIVATE Generators Models "libonnxruntime.so")
 
 # Microsoft.GSL::GSL
 # target_include_directories(Generators PRIVATE ${safeint_SOURCE_DIR})
@@ -116,8 +116,8 @@ if(MSVC)
     target_compile_options(ort_generators PRIVATE "$<$<COMPILE_LANGUAGE:CXX>:/MP>")
 endif()
 
- # Copy the onnxruntime binaries into the build folder so it's found on launch
-file(GLOB onnxruntime_libs "${CMAKE_SOURCE_DIR}/ort/onnxruntime*.dll")
+# Copy the onnxruntime binaries into the build folder so it's found on launch
+file(GLOB onnxruntime_libs "${CMAKE_SOURCE_DIR}/ort/libonnxruntime*.so*")
 foreach(DLL_FILE ${onnxruntime_libs})
     add_custom_command(
         TARGET Generators POST_BUILD

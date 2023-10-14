@@ -1,5 +1,6 @@
 #include <cuda_runtime.h>
 #include <assert.h>
+#include <algorithm>
 //#include <span>
 #include "../span.h"
 #include "beam_search_scorer_cuda.cuh"
