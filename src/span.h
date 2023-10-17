@@ -14,7 +14,7 @@ struct span {
   span(const span<std::remove_const_t<T>>& s) : p_{const_cast<T*>(s.data())}, length_{s.size()} {}
   span(std::vector<std::remove_const_t<T>>& s) : p_{const_cast<T*>(s.data())}, length_{s.size()} {}
 
-  bool empty() const { return length_ != 0; }
+  bool empty() const { return length_ == 0; }
 
   size_t size() const { return length_; }
   size_t size_bytes() const { return length_ * sizeof(T); }
