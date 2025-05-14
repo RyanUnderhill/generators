@@ -1,3 +1,5 @@
+This became the basis for the https://github.com/microsoft/onnxruntime-genai project. Keeping here for history.
+
 # Generators
 More easily run generator models using Onnx Runtime
 
